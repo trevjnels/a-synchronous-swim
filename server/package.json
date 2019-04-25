@@ -1,0 +1,21 @@
+{
+  "name": "a-synchronous-swim-server",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "nodemon .",
+    "server": "node .",
+    "test": "node_modules/jest/bin/jest.js spec"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "keypress": "^0.2.1",
+    "parse-multipart": "^1.0.4",
+    "underscore": "^1.9.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "jest": "^24.1.0"
+  }
+}

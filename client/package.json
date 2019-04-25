@@ -1,0 +1,14 @@
+{
+  "name": "a-synchronous-swim-client",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "live-server ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "underscore": "^1.9.1"
+  }
+}
