@@ -17,18 +17,23 @@
   //    });
   //  };
 
-   const ajaxRandomCommand = () => {
+   const ajaxComandFeed = () => {
    $.get(serverUrl , (data) => {
-console.log("LINE 22 ", data)
      SwimTeam.move(data)
    })
    }
 
-   $('body').on('keydown', (event) => {
-    console.log("you just pressed the",event.key)
-    if (event.key === 'r') {
-      ajaxRandomCommand()
-    }
+   $(document).ready((event) => {
+     var recurser = function () {
+
+        ajaxComandFeed()
+        setTimeout(() => {
+          recurser()
+        }, 500);
+
+     }
+     recurser()
+
   });
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!

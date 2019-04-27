@@ -4,7 +4,8 @@ const headers = require('./cors');
 const multipart = require('./multipartUtils');
 const http = require('http');
 const keypressHandler = require('./keypressHandler.js')
-var PORT = 5000;
+const PORT = 5000;
+const messageQueue = require('./messageQueue.js')
 
 
 // Path for the background image ///////////////////////
@@ -12,21 +13,46 @@ module.exports.backgroundImageFile = path.join('.', 'background.jpg');
 ////////////////////////////////////////////////////////
 
 module.exports.router = (req, res, next = ()=>{}) => {
-  console.log('Serving request type ' + req.method + ' for url ' + req.url);
+  // console.log('Serving request type ' + req.method + ' for url ' + req.url);
   // if req.method === "GET"
 //  res.data
   res._data = [];
   if(req.method === 'GET'){
-    var directions = ['left', 'right', 'up', 'down']
+
+
+
+    var message = messageQueue.dequeue();
+
+    if (message !== undefined) {
+      res.writeHead(200, headers);
+      res.end(message);
+    } else {
+      res.writeHead(200, headers);
+      res.end("");
+    }
+
+
+
+
+
+
+
+
+    // var directions = ['left', 'right', 'up', 'down']
     // var num =  Math.floor(Math.random() * 3);
-    // console.log(res._data, "LINE 72")
-    var direction = keypressHandler.initialize()
+    // // console.log(res._data, "LINE 72")
+    // // while(keypressHandler.message)
+    // var direction = directions[num]
 
-		// console.log("TCL: module.exports.router -> direction", direction)
+		// // console.log("TCL: module.exports.router -> direction", direction)
+
+    // res.writeHead(200, headers);
+    // res.end(direction);
 
 
-    res.writeHead(200, headers);
-    res.end(direction);
+
+
+
   } else {
 
     res.writeHead(200, headers);
