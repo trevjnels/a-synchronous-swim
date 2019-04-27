@@ -17,24 +17,20 @@ describe('server responses', () => {
     httpHandler.router(req, res);
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
-    expect(res._data.toString()).to.be.empty
+
 
     done();
   });
 
   it('should respond to a GET request for a swim command', (done) => {
     let {req, res} = server.mock('/', 'GET');
+    var testDirections = ['left', 'right', 'up', 'down'];
 
     httpHandler.router(req, res);
     console.log("res: " ,res, "| req: ", req)
-    console.log("HELLO OUT THERE")
-    console.log("response", res._data)
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
-    expect(res._data.toString()).to.have.lengthOf.above(0);
-
-
-
+    expect(testDirections.includes(res._data[0])).to.equal(true);
     done();
   });
 

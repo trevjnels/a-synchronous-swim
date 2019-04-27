@@ -5,18 +5,28 @@
   //
   // TODO: build the swim command fetcher
 
-  //  const ajaxRandomCommand = () => {
+
   //    $.ajax({
   //      type: 'GET',
   //      url: serverUrl,
-  //      cache: false,
-  //      processData: false,
-  //      success: () => {
-  //        console.log('API is working')
+  //     //  cache: false,
+  //     //  processData: false,
+  //      success: (response) => {
+  //       console.log(JSON.stringify(response))
   //      }
-  //    })
-  //  }
+  //    });
+  //  };
 
+   const ajaxRandomCommand = () => {
+   $.get(serverUrl , (data) => SwimTeam.move(data));
+   }
+
+   $('body').on('keydown', (event) => {
+    console.log("you just pressed the",event.key)
+    if (event.key === 'r') {
+      ajaxRandomCommand()
+    }
+  });
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.

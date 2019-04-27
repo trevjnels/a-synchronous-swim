@@ -6,36 +6,42 @@ const http = require('http');
 
 var PORT = 5000;
 
- http.createServer((response, request)=> {
-  const {headers, method, url} = request;
-  let body = [];
-  request.on('error', (err) => {
+// module.exports.router
 
-    response.statusCode = 400;
-    response.end()
+//  http.createServer((response, request)=> {
+//   const {headers, method, url} = request;
+//   let body = [];
+//   request.on('error', (err) => {
 
-      console.error(err)
-  }).on('data', (chunk) => {
-    body.push(chunk)
-    body.push('left')
-  }).on('end', () => {
-    body = Buffer.concat(body).toString();
-  })
-  // console.log("Body - - - - - -", body)
-  if(response.method === "GET"){
+//     response.statusCode = 400;
+//     response.end()
+
+//       console.error(err)
+//   }).on('data', (chunk) => {
+//     body.push(chunk)
+//      /// - - - - - - - - - - - - - - - - - -
+//     body.push('left') // just trying to foce data on...
+//     /// - - - - - - - - - - - - - - - - - -
+//   }).on('end', () => {
+//     body = Buffer.concat(body).toString();
+//     body._data.push("left")
+//   }) // post delete or put only
+//   // console.log("Body - - - - - -", body)
+//   if(response.method === "GET") {
 
 
-  response.statusCode = 200;
-  response.setHeader(headers)
-  const responseBody = { headers, method, url, body: 'left' };
-  response.write(JSON.stringify(responseBody))
+//   response.statusCode = 200;
+//   response.setHeader(headers)
+//   const responseBody = { headers, method, url, body: 'left' };
+//   response.write(JSON.stringify(responseBody))
 
-  response.end();
-  }
+//   response.end();
+//   }
 
-}).listen(PORT, () => {
-    console.log('server running on', PORT)
-  })
+// }).listen(PORT, () => {
+//     console.log('server running on', PORT)
+//   })
+
 
 // server.listen({
 //   port: PORT
@@ -58,9 +64,19 @@ module.exports.router = (req, res, next = ()=>{}) => {
   console.log('Serving request type ' + req.method + ' for url ' + req.url);
   // if req.method === "GET"
 //  res.data
+  res._data = [];
+  if(req.method === 'GET'){
+    var directions = ['left', 'right', 'up', 'down']
+    var num =  Math.floor(Math.random() * 3);
+    // console.log(res._data, "LINE 72")
+    res.writeHead(200, headers);
+    res.write(directions[num])
+    res.end();
+  } else {
 
-  res.writeHead(200, headers);
-  res.end();
+    res.writeHead(200, headers);
+    res.end();
+  }
 };
 
 
