@@ -18,7 +18,10 @@
   //  };
 
    const ajaxRandomCommand = () => {
-   $.get(serverUrl , (data) => SwimTeam.move(data));
+   $.get(serverUrl , (data) => {
+console.log("LINE 22 ", data)
+     SwimTeam.move(data)
+   })
    }
 
    $('body').on('keydown', (event) => {

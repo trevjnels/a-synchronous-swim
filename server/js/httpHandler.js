@@ -3,57 +3,8 @@ const path = require('path');
 const headers = require('./cors');
 const multipart = require('./multipartUtils');
 const http = require('http');
-
+const keypressHandler = require('./keypressHandler.js')
 var PORT = 5000;
-
-// module.exports.router
-
-//  http.createServer((response, request)=> {
-//   const {headers, method, url} = request;
-//   let body = [];
-//   request.on('error', (err) => {
-
-//     response.statusCode = 400;
-//     response.end()
-
-//       console.error(err)
-//   }).on('data', (chunk) => {
-//     body.push(chunk)
-//      /// - - - - - - - - - - - - - - - - - -
-//     body.push('left') // just trying to foce data on...
-//     /// - - - - - - - - - - - - - - - - - -
-//   }).on('end', () => {
-//     body = Buffer.concat(body).toString();
-//     body._data.push("left")
-//   }) // post delete or put only
-//   // console.log("Body - - - - - -", body)
-//   if(response.method === "GET") {
-
-
-//   response.statusCode = 200;
-//   response.setHeader(headers)
-//   const responseBody = { headers, method, url, body: 'left' };
-//   response.write(JSON.stringify(responseBody))
-
-//   response.end();
-//   }
-
-// }).listen(PORT, () => {
-//     console.log('server running on', PORT)
-//   })
-
-
-// server.listen({
-//   port: PORT
-// }, () => {
-//   console.log('server running on', PORT)
-// });
-
-
-
-//array "left" "right", up
-// Math.floor(Math.random()
-// })
 
 
 // Path for the background image ///////////////////////
@@ -67,11 +18,15 @@ module.exports.router = (req, res, next = ()=>{}) => {
   res._data = [];
   if(req.method === 'GET'){
     var directions = ['left', 'right', 'up', 'down']
-    var num =  Math.floor(Math.random() * 3);
+    // var num =  Math.floor(Math.random() * 3);
     // console.log(res._data, "LINE 72")
+    var direction = keypressHandler.initialize()
+
+		// console.log("TCL: module.exports.router -> direction", direction)
+
+
     res.writeHead(200, headers);
-    res.write(directions[num])
-    res.end();
+    res.end(direction);
   } else {
 
     res.writeHead(200, headers);

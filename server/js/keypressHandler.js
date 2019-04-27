@@ -36,13 +36,13 @@ module.exports.initialize = () => {
     }
 
     if(key && key.name === 'r') {
-      console.log("PIRATES")
+      logKeypress("PIRATES")
     }
 
     // check to see if the keypress itself is a valid message
     if (isValidMessage(key.name)) {
       console.log(`Message received: ${key.name}`);
-      return; // don't do any more processing on this key
+      return key.name
     }
 
     // otherwise build up a message from individual characters
