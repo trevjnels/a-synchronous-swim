@@ -16,6 +16,15 @@
   //      }
   //    });
   //  };
+  const ajaxImageFeed = () => {
+    $.get(serverUrl + '/background.jpg', (image) => {
+      console.log("received response")
+      // console.log(image);
+      $('.pool').toggleClass('background')
+    })
+  }
+
+  ajaxImageFeed();
 
    const ajaxComandFeed = () => {
    $.get(serverUrl , (data) => {
@@ -24,6 +33,7 @@
    }
 
    $(document).ready((event) => {
+
      var recurser = function () {
 
         ajaxComandFeed()

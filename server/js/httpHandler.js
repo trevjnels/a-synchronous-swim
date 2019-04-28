@@ -9,13 +9,43 @@ const messageQueue = require('./messageQueue.js')
 
 
 // Path for the background image ///////////////////////
-module.exports.backgroundImageFile = path.join('.', 'background.jpg');
+module.exports.backgroundImageFile = path.dirname("/server/spec/water-lg.jpg") //path.join('.',  'spec', 'water-lg.jpg');
+// path.join('.', 'spec', 'missing.jpg');
 ////////////////////////////////////////////////////////
 
-module.exports.router = (req, res, next = ()=>{}) => {
-  // console.log('Serving request type ' + req.method + ' for url ' + req.url);
+module.exports.router = (req, res, next = ()=>{
+  console.log('Serving request type ' + req.method + ' for url ' + req.url);
+}) => {
+  //
   // if req.method === "GET"
-//  res.data
+//  res.data'
+  var backgroundImage = path.join('.',  'spec', 'water-lg.jpg');
+  // console.log("JJJJJJJJJJJJ")
+  // console.log("TTTTT " , backgroundImage)
+  console.log("req.url: ", req.url, "req.method: ", req.method, "backgroundImage: ", backgroundImage  )
+
+  if(req.method === 'GET' && req.url === '/background.jpg') {
+
+    console.log('LINE 27 is running')
+
+      if (backgroundImage !== 'spec/missing.jpg') {
+         var img = fs.readFileSync(backgroundImage);
+         console.log("!!!!!! ", backgroundImage)
+         res.writeHead(200, {
+          'access-control-allow-origin': '*',
+          'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'access-control-allow-headers': 'content-type, accept',
+          'access-control-max-age': 10,
+          'Content-Type': 'image/jpg' })
+         res.end(img, 'binary');
+         next();
+      } else {
+         res.writeHead(404, headers);
+         res.end();
+         console.error('ERROR');
+         next();
+      }
+    }
 
 
   res._data = [];
@@ -28,8 +58,6 @@ module.exports.router = (req, res, next = ()=>{}) => {
       res.writeHead(200, headers);
       res.end("");
     }
-
-
 
 
 
