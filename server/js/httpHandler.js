@@ -16,13 +16,11 @@ module.exports.router = (req, res, next = ()=>{}) => {
   // console.log('Serving request type ' + req.method + ' for url ' + req.url);
   // if req.method === "GET"
 //  res.data
+
+
   res._data = [];
-  if(req.method === 'GET'){
-
-
-
+  if(req.method === 'GET' && req.url === '/') {
     var message = messageQueue.dequeue();
-
     if (message !== undefined) {
       res.writeHead(200, headers);
       res.end(message);
