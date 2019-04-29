@@ -36,34 +36,6 @@ console.log(req.method)
       })
     })
    
-    
-
-    // console.log("IMAGE POSTING!")
-    // fs.unlinkSync ('./background.jpg') 
-    // // // console.log("request" , req.on('data') )
-    // // let body = [];
-    // req.on('error', (err) => {
-    //   console.error(err);
-    // })
-    // req.pipe(fs.createWriteStream('./background.jpg')).on('data', (chunk) => {
-    //   body.push(chunk);
-    // }).on('end', (err) => {
-    //   if(err) console.log(err)   
-    //   body = Buffer.concat(body).toString();
-    //   fs.writeFileSync('./background.jpg', body, {encoding: 'binary'})
-    // //   // console.log("Body = ", body)
-    //   // 
-    // //   
-    // // req.pipe(fs.createWriteStream()).
-    // res.writeHead(200, headers)
-    // res.end("ok")
-    //   // console.log('response body', body)
-    // })
-    //   // res.on('error', (err) => {
-    //   //   console.error(err);
-    //   // });
-  
-    //   next()
     }
  
   
