@@ -7,39 +7,70 @@ const keypressHandler = require('./keypressHandler.js')
 const PORT = 5000;
 const messageQueue = require('./messageQueue.js')
 
-// fs.copyFileSync('./water-lg.jpg','./water-lg1.jpg', (err)=> {
-//   if(err) throw err;
-//   fs.renameSync('./water-lg1.jpg', './background.jpg', (err) =>{
-//     console.log(err)
-//   })
-// })
 fs.copyFileSync('./water-lg.jpg','./water-lg1.jpg')
 fs.renameSync('./water-lg1.jpg', './background.jpg')
+const backPath = './background.jpg'
 
 
+module.exports.router = (req, res, next = ()=>{
 
-module.exports.router = (req, res, next = (err)=>{
-  if(err) throw err;
-  console.log("api is working")
 }) => {
+console.log(req.method)
 
-  if(req.method === 'POST' && req.url === '/new/background.jpg' ){
+  if(req.method === 'POST'){
+    let imageData = Buffer.alloc(0)
+    req.on('data', (chunk)=> {
+      imageData = Buffer.concat([imageData, chunk])
+    })
+    req.on('end', () => {
+      var file = multipart.getFile(imageData)
+      fs.writeFile(backPath, file.data, err => {
+        if(err){
+          res.writeHead(400, headers)
+          res.end
+          throw err;
+        } else {
+          res.writeHead(201, headers)
+          res.end()
+        }
+      })
+    })
+   
+    
 
-    next()
-  }
-
-
+    // console.log("IMAGE POSTING!")
+    // fs.unlinkSync ('./background.jpg') 
+    // // // console.log("request" , req.on('data') )
+    // // let body = [];
+    // req.on('error', (err) => {
+    //   console.error(err);
+    // })
+    // req.pipe(fs.createWriteStream('./background.jpg')).on('data', (chunk) => {
+    //   body.push(chunk);
+    // }).on('end', (err) => {
+    //   if(err) console.log(err)   
+    //   body = Buffer.concat(body).toString();
+    //   fs.writeFileSync('./background.jpg', body, {encoding: 'binary'})
+    // //   // console.log("Body = ", body)
+    //   // 
+    // //   
+    // // req.pipe(fs.createWriteStream()).
+    // res.writeHead(200, headers)
+    // res.end("ok")
+    //   // console.log('response body', body)
+    // })
+    //   // res.on('error', (err) => {
+    //   //   console.error(err);
+    //   // });
+  
+    //   next()
+    }
+ 
+  
   if(req.method === 'GET' && req.url === '/background.jpg') {
-         var img = fs.readFileSync ('./background.jpg', function(err, data){
-           if(err){
-             console.log('error reading file');
-             res.writeHead(404, headers);
-              res.end();
-              next()
-           } else {
-             return data;
-           }
-         });
+    
+         var img = fs.readFileSync('./background.jpg')
+           
         //  console.log("!!!!!! ", backgroundImage)
          res.writeHead(200, {
           'access-control-allow-origin': '*',
@@ -64,7 +95,7 @@ module.exports.router = (req, res, next = (err)=>{
       res.writeHead(200, headers)
       res.end()
     }
-
+  
 
 
 

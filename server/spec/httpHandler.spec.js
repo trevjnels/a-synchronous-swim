@@ -41,7 +41,6 @@ describe('server responses', () => {
     httpHandler.router(req, res, () => {
       expect(res._responseCode).to.equal(404);
       expect(res._ended).to.equal(true);
-      // done();
     });
     done()
   });
@@ -53,20 +52,23 @@ describe('server responses', () => {
     httpHandler.router(req, res, () => {
       expect(res._responseCode).to.equal(200);
       expect(res._ended).to.equal(true);
-      done();
     });
-
-
     done();
   });
 
   it('should respond to a POST request to save a background image', (done) => {
-    // write your test here
+    httpHandler.backgroundImageFile = path.join('.', 'spec', 'water-lg.jpg');
+    var formData = new FormData();
+    fs.readFile('./background.jpg', (err, data) => {
+      if (err) throw err;
+      formData.append('file', data )
+      let {req, res} = server.mock('/', "POST", formData)
+      httpHandler.router(req, res, () => {
+        expect(res._responseCode).to.equal(201);
+        expect(res._ended).to.equal(true);
+      });
+    })
+    // formData.append('file',  )
     done();
   });
 
-  it('should send back the previously saved image', (done) => {
-    // write your test here
-    done();
-  });
-});
