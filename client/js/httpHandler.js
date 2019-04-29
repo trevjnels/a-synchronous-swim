@@ -16,6 +16,28 @@
   //      }
   //    });
   //  };
+
+
+  const ajaxImageUpload = () => {
+    $.get(serverUrl + '/background.jpg', (image) => {
+      console.log("received response")
+      // console.log(image);
+      $('body').html(`<h1>A Synchronous Swim</h1>
+      <div class="pool background">
+        <div class="team">
+          <div class="swimmer">↜</div>
+          <div class="swimmer">↜</div>
+          <div class="swimmer">↜</div>
+          <div class="swimmer">↜</div>
+        </div>
+      </div>
+      <h3>Background Image Upload</h3>
+      <form>
+        <input type="file" class="file" /><br>
+        <input type="submit" />
+      </form>`)
+    })
+  }
   const ajaxImageFeed = () => {
     $.get(serverUrl + '/background.jpg', (image) => {
       console.log("received response")
@@ -37,7 +59,7 @@
     })
   }
 
-  ajaxImageFeed();
+  // ajaxImageFeed();
 
    const ajaxComandFeed = () => {
    $.get(serverUrl , (data) => {
@@ -47,15 +69,15 @@
 
    $(document).ready((event) => {
 
-     var recurser = function () {
+    //  var recurser = function () {
 
-        ajaxComandFeed()
-        setTimeout(() => {
-          recurser()
-        }, 500);
+    //     ajaxComandFeed()
+    //     setTimeout(() => {
+    //       recurser()
+    //     }, 500);
 
-     }
-     recurser()
+    //  }
+    //  recurser()
 
   });
   /////////////////////////////////////////////////////////////////////
@@ -74,6 +96,8 @@
       contentType: false,
       processData: false,
       success: () => {
+     
+        // ajaxImageFeed()
         // reload the page
         window.location = window.location.href;
       }
@@ -83,6 +107,8 @@
   $('form').on('submit', function(e) {
     e.preventDefault();
 
+  
+
     var form = $('form .file')[0];
     if (form.files.length === 0) {
       console.log('No file selected!');
@@ -90,10 +116,10 @@
     }
 
     var file = form.files[0];
-    if (file.type !== 'image/jpeg') {
-      console.log('Not a jpg file!');
-      return;
-    }
+    // if (file.type !== 'image/jpeg') {
+    //   console.log('Not a jpg file!');
+    //   return;
+    // }
 
     ajaxFileUplaod(file);
   });
