@@ -20,7 +20,20 @@
     $.get(serverUrl + '/background.jpg', (image) => {
       console.log("received response")
       // console.log(image);
-      $('.pool').toggleClass('background')
+      $('body').html(`<h1>A Synchronous Swim</h1>
+      <div class="pool background">
+        <div class="team">
+          <div class="swimmer">↜</div>
+          <div class="swimmer">↜</div>
+          <div class="swimmer">↜</div>
+          <div class="swimmer">↜</div>
+        </div>
+      </div>
+      <h3>Background Image Upload</h3>
+      <form>
+        <input type="file" class="file" /><br>
+        <input type="submit" />
+      </form>`)
     })
   }
 

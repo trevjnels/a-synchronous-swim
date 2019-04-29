@@ -7,30 +7,40 @@ const keypressHandler = require('./keypressHandler.js')
 const PORT = 5000;
 const messageQueue = require('./messageQueue.js')
 
+// fs.copyFileSync('./water-lg.jpg','./water-lg1.jpg', (err)=> {
+//   if(err) throw err;
+//   fs.renameSync('./water-lg1.jpg', './background.jpg', (err) =>{
+//     console.log(err)
+//   })
+// })
+fs.copyFileSync('./water-lg.jpg','./water-lg1.jpg')
+fs.renameSync('./water-lg1.jpg', './background.jpg')
 
-// Path for the background image ///////////////////////
-module.exports.backgroundImageFile = path.dirname("/server/spec/water-lg.jpg") //path.join('.',  'spec', 'water-lg.jpg');
-// path.join('.', 'spec', 'missing.jpg');
-////////////////////////////////////////////////////////
 
-module.exports.router = (req, res, next = ()=>{
-  console.log('Serving request type ' + req.method + ' for url ' + req.url);
+
+module.exports.router = (req, res, next = (err)=>{
+  if(err) throw err;
+  console.log("api is working")
 }) => {
-  //
-  // if req.method === "GET"
-//  res.data'
-  var backgroundImage = path.join('.',  'spec', 'water-lg.jpg');
-  // console.log("JJJJJJJJJJJJ")
-  // console.log("TTTTT " , backgroundImage)
-  console.log("req.url: ", req.url, "req.method: ", req.method, "backgroundImage: ", backgroundImage  )
+
+  if(req.method === 'POST' && req.url === '/new/background.jpg' ){
+
+    next()
+  }
+
 
   if(req.method === 'GET' && req.url === '/background.jpg') {
-
-    console.log('LINE 27 is running')
-
-      if (backgroundImage !== 'spec/missing.jpg') {
-         var img = fs.readFileSync(backgroundImage);
-         console.log("!!!!!! ", backgroundImage)
+         var img = fs.readFileSync ('./background.jpg', function(err, data){
+           if(err){
+             console.log('error reading file');
+             res.writeHead(404, headers);
+              res.end();
+              next()
+           } else {
+             return data;
+           }
+         });
+        //  console.log("!!!!!! ", backgroundImage)
          res.writeHead(200, {
           'access-control-allow-origin': '*',
           'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -39,24 +49,20 @@ module.exports.router = (req, res, next = ()=>{
           'Content-Type': 'image/jpg' })
          res.end(img, 'binary');
          next();
-      } else {
-         res.writeHead(404, headers);
-         res.end();
-         console.error('ERROR');
-         next();
+      } 
+      res._data = [];
+      if(req.method === 'GET' && req.url === '/') {
+        var message = messageQueue.dequeue();
+        if (message !== undefined) {
+          res.writeHead(200, headers);
+          res.end(message);
+        } else {
+          res.writeHead(200, headers);
+          res.end("");
+        }
       }
-    }
-
-
-  res._data = [];
-  if(req.method === 'GET' && req.url === '/') {
-    var message = messageQueue.dequeue();
-    if (message !== undefined) {
-      res.writeHead(200, headers);
-      res.end(message);
-    } else {
-      res.writeHead(200, headers);
-      res.end("");
+      res.writeHead(200, headers)
+      res.end()
     }
 
 
@@ -79,12 +85,8 @@ module.exports.router = (req, res, next = ()=>{
 
 
 
-  } else {
 
-    res.writeHead(200, headers);
-    res.end();
-  }
-};
+
 
 
 

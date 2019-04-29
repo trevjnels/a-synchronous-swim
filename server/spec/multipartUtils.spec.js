@@ -6,7 +6,7 @@ const multipart = require('../js/multipartUtils');
 
 describe('server responses', () => {
 
-  it('should find the boundary', (done) => {
+  xit('should find the boundary', (done) => {
     var filename = path.join('.', 'spec', 'water-lg.multipart');
     fs.readFile(filename, (err, fileData) => {
       var boundary = multipart.getBoundary(fileData);
@@ -15,7 +15,7 @@ describe('server responses', () => {
     });
   });
 
-  it('should decode all parts', (done) => {
+  xit('should decode all parts', (done) => {
     var filename = path.join('.', 'spec', 'water-lg.multipart');
     fs.readFile(filename, (err, fileData) => {
       var parts = multipart.parse(fileData);
@@ -24,7 +24,7 @@ describe('server responses', () => {
     });
   });
 
-  it('should find the image file', (done) => {
+xit('should find the image file', (done) => {
     var filename = path.join('.', 'spec', 'water-lg.multipart');
     fs.readFile(filename, (err, fileData) => {
       var file = multipart.getFile(fileData);
@@ -33,7 +33,7 @@ describe('server responses', () => {
     });
   });
 
-  it('should correctly decode the image file', (done) => {
+  xit('should correctly decode the image file', (done) => {
     var filename = path.join('.', 'spec', 'water-lg.multipart');
     fs.readFile(filename, (err, fileData) => {
       var file = multipart.getFile(fileData);
